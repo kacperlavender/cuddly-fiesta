@@ -1,9 +1,31 @@
-## **1. Profit Formula**
+## **1. Formula**
 
 For a **put option** example:
 
 $$
 \text{Profit} = (\text{Strike Price} - \text{Stock Price at Expiration}) - \text{Option Cost}
+$$
+
+
+Constant capitalization
+$$
+Todays value = Ke^{-rt}
+$$
+
+Price of an option
+$$
+f = e^{-r\Delta t}[pf_u + (1-p)f_d]
+$$
+$$
+p = \frac{e^{-r\Delta t} - d}{u - d}
+$$
+
+$$
+u = e^{\sigma\sqrt{\Delta t}}
+$$
+
+$$
+d = e^{-\sigma\sqrt{\Delta t}} //or => d = \frac{1}{u}
 $$
 
 ***
@@ -72,7 +94,7 @@ $$
 
 ***
 
-## **6. Trading options*
+## **6. Trading options**
 
 ### Option + Asset
 
@@ -100,9 +122,9 @@ Payoff from a bear spread created with put options.
 
 | Stock price range        | Payoff z long call | Payoff z short call | Total payoff |
 |--------------------------|--------------------|---------------------|--------------|
-| $S_T \leq K_1$           | $0$                | $0$                  | $0$          |
-| $K_1 < S_T < K_2$        | $S_T - K_1$        | $0$                  | $S_T - K_1$  |
-| $S_T \geq K_2$           | $S_T - K_1$        | $- (S_T - K_2) $          | $K_2 - K_1$  |
+| $S_T \leq K_1$           | $0$                | $0$                 | $0$          |
+| $K_1 < S_T < K_2$        | $S_T - K_1$        | $0$                 | $S_T - K_1$  |
+| $S_T \geq K_2$           | $S_T - K_1$        | $- (S_T - K_2) $    | $K_2 - K_1$  |
 
 
 #### Bear spreads
@@ -172,3 +194,101 @@ Payoﬀ from a straddle
 A strip consists of a long position in one European call and two European puts with the same strike price and expiration date. A strap consists of a long position in two European calls and one European put with the same strike price and expiration date. In a strip the investor is betting that there will be a big stock price move and considers a decrease in the stock price to be more likely than an increase.
 
 ![strips and straps](img/img9.png)
+
+
+## **7. Black-Scholes Formula**
+
+### Stock price behaviour used by Black, Scholes, and Merton
+
+$$
+\frac{\Delta S}{S} \sim \phi(\mu \Delta t, \sigma^2 \Delta t)
+$$
+
+#### Example
+Consider a stock with an initial price of $40, an expected return of 16% per annum, and a volatility of 20% per annum. The probability distribution of the stock price \( $S_T$ \) in 6 months' time is given by:
+
+$$
+\ln S_T \sim \phi[\ln 40 + (0.16 - 0.2^2 / 2) \times 0.5, \; 0.2^2 \times 0.5]
+$$
+$$
+\ln S_T \sim \phi(3.759, 0.02)
+$$
+
+There is a 95% probability that a normally distributed variable has a value within 1.96 standard deviations of its mean. In this case, the standard deviation is \( \sqrt{0.02} = 0.141 \). Hence, with 95% confidence:
+
+$$
+3.759 - 1.96 \times 0.141 < \ln S_T < 3.759 + 1.96 \times 0.141
+$$
+
+This can be written as:
+
+$$
+e^{3.759 - 1.96 \times 0.141} < S_T < e^{3.759 + 1.96 \times 0.141}
+$$
+
+or
+
+$$
+32.55 < S_T < 56.56
+$$
+
+**Thus, there is a 95% probability that the stock price in 6 months will lie between 32.55 and 56.56.**
+
+### Expected value
+$$
+E(S_T) = S_0e^{\mu T}
+$$
+
+### Variance 
+$$
+var(S_T) = S_0^2e^{2\mu T}(e^{\sigma^2 T}-1)
+$$
+
+
+### Estimating Volatility from Historical Data
+
+##### Log Returns
+$$
+u_i = \ln \left( \frac{S_i}{S_{i-1}} \right)
+$$
+
+#### Sample Std. Dev.
+$$
+s = \sqrt{\frac{1}{n-1} \sum_{i=1}^n (u_i - \bar{u})^2}
+$$
+
+#### Volatility Estimate
+$$
+\hat{\sigma} = \frac{s}{\sqrt{\tau}}
+$$
+
+Example on p: 350 
+
+### Black-Scholes Formula
+$$
+c = S_0 N(d_1) - K e^{-rT} N(d_2)
+$$
+
+$$
+p = K e^{-rT} N(-d_2) - S_0 N(-d_1)
+$$
+
+where:
+$$
+d_1 = \frac{\ln \left(\frac{S_0}{K}\right) + \left(r + \tfrac{1}{2}\sigma^2\right)T}{\sigma \sqrt{T}}
+$$
+
+$$
+d_2 = d_1 - \sigma \sqrt{T}
+$$
+
+
+#### Black-Scholes Partial Differencial Equation
+$$
+\frac{\partial V}{\partial t} + \frac{1}{2}\sigma^2 S^2 \frac{\partial^2 V}{\partial S^2} + r S \frac{\partial V}{\partial S} - rV = 0
+$$
+where: 
+$
+V = (S, t) 
+$
+is the option price, which is a function of the stock price $S$ and time $t$
