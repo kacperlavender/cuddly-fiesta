@@ -288,7 +288,5 @@ $$
 \frac{\partial V}{\partial t} + \frac{1}{2}\sigma^2 S^2 \frac{\partial^2 V}{\partial S^2} + r S \frac{\partial V}{\partial S} - rV = 0
 $$
 where: 
-$
-V = (S, t) 
-$
+$V = (S, t) $
 is the option price, which is a function of the stock price $S$ and time $t$
